@@ -1,0 +1,6 @@
+pandas>=1.5.0,<2.0.0
+numpy>=1.24.0,<2.0.0
+yfinance>=0.2.30
+requests>=2.31.0
+streamlit>=1.29.0
+python-dotenv>=1.0.0

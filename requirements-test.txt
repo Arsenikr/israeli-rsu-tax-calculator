@@ -1,0 +1,28 @@
+# Testing dependencies for RSU Optimizer
+# Install with: pip install -r requirements-test.txt
+
+# Core application dependencies
+pandas>=1.5.0,<2.0.0
+numpy>=1.24.0,<2.0.0
+yfinance>=0.2.30
+requests>=2.31.0
+streamlit>=1.29.0
+python-dotenv>=1.0.0
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+pytest-xdist>=3.0.0
+
+# Mock and testing utilities
+unittest-mock>=1.0.1
+freezegun>=1.2.0
+
+# Code coverage
+coverage>=7.0.0
+
+# Linting and code quality
+flake8>=6.0.0
+black>=23.0.0
+isort>=5.12.0
