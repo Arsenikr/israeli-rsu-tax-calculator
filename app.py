@@ -13,7 +13,7 @@ def clean_csv_data(df: pd.DataFrame) -> pd.DataFrame:
     cleaned_df = df.copy()
     cleaned_df['Stock Code'] = cleaned_df['Stock Code'].str.strip().str.upper()
     for col in ['Grant date', 'Vesting date']:
-        cleaned_df[col] = pd.to_datetime(cleaned_df[col], dayfirst=True, errors='coerce').dt.strftime('%Y-%m-%d')
+        cleaned_df[col] = pd.to_datetime(cleaned_df[col], dayfirst=False, errors='coerce').dt.strftime('%Y-%m-%d')
     cleaned_df['Number of units'] = pd.to_numeric(cleaned_df['Number of units'], errors='coerce').fillna(0).astype(int)
     cleaned_df = cleaned_df[cleaned_df['Number of units'] > 0]
     cleaned_df['Company name'] = cleaned_df['Company name'].str.strip()
@@ -53,7 +53,7 @@ class RSUOptimizer:
             date_obj = pd.to_datetime(date_str)
             start_date = date_obj - timedelta(days=7)
             end_date = date_obj + timedelta(days=1)
-            fx_data = yf.download('ILS=X', start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'), progress=False)
+            fx_data = yf.download('ILS=X', start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'), progress=False, auto_adjust=True)
             if fx_data.empty:
                 st.warning(f"No FX rate found for {date_str}, using fallback.")
                 return 3.8
@@ -78,7 +78,7 @@ class RSUOptimizer:
                 start_date = date_obj - timedelta(days=7)
             end_date = date_obj + timedelta(days=1)
 
-            hist = stock.history(start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'))
+            hist = stock.history(start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'), auto_adjust=True)
             if hist.empty:
                 st.warning(f"No price history found for {ticker} around {date_str}")
                 return None
@@ -171,7 +171,7 @@ class RSUOptimizer:
         }
 
     def optimize_rsu_sales(self, rsu_data: pd.DataFrame, current_income: float, target_bracket_limit: float) -> pd.DataFrame:
-        """Determines the optimal number of shares to sell from each grant."""
+        """Determines the optimal number of shares to sell from each grant.""" 
         sale_date_str = datetime.now().strftime('%Y-%m-%d')
         income_room = target_bracket_limit - current_income
         if income_room <= 0:
@@ -263,7 +263,7 @@ def main():
         </style>
     """, unsafe_allow_html=True)
     st.title("RSU Sales Tax Optimizer for Israel")
-    st.error("Disclaimer: This is an informational tool, not professional tax advice. Consult a qualified advisor.")
+    st.error("Disclaimer: This tool is provided for informational purposes only and is not a substitute for professional advice. It does not replace consulting with a licensed CPA or tax advisor.")
 
     optimizer = RSUOptimizer()
 
