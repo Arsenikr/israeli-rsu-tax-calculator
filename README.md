@@ -2,6 +2,9 @@
 
 This tool helps Israeli taxpayers optimize RSU (Restricted Stock Unit) sales by analyzing tax brackets, Section 102 eligibility, and real-time stock prices.
 
+> **Disclaimer:** This tool is provided for informational purposes only and is not a substitute for professional advice. It does not replace consulting with a licensed CPA or tax advisor.
+
+
 ## Features
 
 * Real-time stock price updates
