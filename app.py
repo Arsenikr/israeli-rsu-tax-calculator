@@ -255,7 +255,14 @@ class RSUOptimizer:
 
 def main():
     st.set_page_config(layout="wide")
-    st.title("🇮🇱 RSU Sales Tax Optimizer for Israel")
+    st.markdown("""
+        <style>
+            [data-testid="stSidebarNav"] {
+                display: none;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    st.title("RSU Sales Tax Optimizer for Israel")
     st.error("Disclaimer: This is an informational tool, not professional tax advice. Consult a qualified advisor.")
 
     optimizer = RSUOptimizer()
@@ -267,6 +274,8 @@ def main():
         target_bracket_limit = st.selectbox("Target Tax Bracket Ceiling", 
             options=[b[0] for b in RSUOptimizer.ISRAELI_TAX_BRACKETS_2025 if b[0] != float('inf')],
             format_func=lambda x: f"Up to {x:,.0f} NIS", index=2)
+        st.markdown("---")
+        st.markdown("<a href='/Help' target='_self' style='text-decoration: none;'>❓ Help</a>", unsafe_allow_html=True)
 
     if uploaded_file is None:
         st.info("Upload a CSV with columns: Company name, Stock Code, Grant date, Vesting date, Number of units, Section 102")
